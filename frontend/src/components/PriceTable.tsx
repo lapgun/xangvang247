@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { Table, Card } from "antd";
+import { Table } from "antd";
 import type { ColumnsType } from "antd/es/table";
 
 interface Column {
@@ -44,15 +44,6 @@ const PriceTable = React.memo(function PriceTable({
     [data]
   );
 
-  const cardTitle = useMemo(
-    () => (
-      <span className="flex items-center gap-2 font-bold">
-        <span>{icon}</span> {title}
-      </span>
-    ),
-    [icon, title]
-  );
-
   const rowClassName = useMemo(
     () => (_: unknown, idx: number) =>
       idx % 2 === 0 ? "bg-white" : "bg-gray-50/50",
@@ -60,12 +51,13 @@ const PriceTable = React.memo(function PriceTable({
   );
 
   return (
-    <Card
-      title={cardTitle}
-      className="!rounded-xl overflow-hidden"
-      style={{ boxShadow: "0 1px 3px 0 rgba(0,0,0,0.08), 0 1px 2px -1px rgba(0,0,0,0.08)" }}
-      styles={{ body: { padding: 0 }, header: { borderBottom: "2px solid #f59e0b" } }}
-    >
+    <div className="!rounded-xl overflow-hidden shadow-sm" style={{ boxShadow: "0 1px 3px 0 rgba(0,0,0,0.08), 0 1px 2px -1px rgba(0,0,0,0.08)" }}>
+      <div className="bg-white px-4 py-3 border-b border-amber-200">
+        <div className="flex items-center gap-2 font-bold text-gray-800">
+          <span>{icon}</span>
+          <span>{title}</span>
+        </div>
+      </div>
       <Table
         columns={antColumns}
         dataSource={dataSource}
@@ -75,7 +67,7 @@ const PriceTable = React.memo(function PriceTable({
         locale={{ emptyText: "Chưa có dữ liệu" }}
         rowClassName={rowClassName}
       />
-    </Card>
+    </div>
   );
 });
 

@@ -5,6 +5,14 @@ export const metadata: Metadata = {
   title: "Giới Thiệu",
   description:
     "XangGiau24h.vn - Website cung cấp thông tin giá xăng dầu, giá vàng hôm nay tại Việt Nam. Cập nhật nhanh, chính xác, miễn phí.",
+  alternates: { canonical: "https://xanggiau24h.vn/about" },
+  openGraph: {
+    title: "Giới Thiệu - XangGiau24h.vn",
+    description: "Website cung cấp thông tin giá xăng dầu, giá vàng hôm nay tại Việt Nam.",
+    url: "https://xanggiau24h.vn/about",
+    type: "website",
+    locale: "vi_VN",
+  },
 };
 
 export default function AboutPage() {

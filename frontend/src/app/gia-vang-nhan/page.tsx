@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     type: "article",
     locale: "vi_VN",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Vàng Nhẫn SJC Hôm Nay - 9999",
+    description: "Giá vàng nhẫn SJC 9999 hôm nay, so sánh SJC vs PNJ.",
+  },
 };
 
 export const revalidate = 300;

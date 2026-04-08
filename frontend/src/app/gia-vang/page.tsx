@@ -13,6 +13,19 @@ export const metadata: Metadata = {
     "giá vàng thế giới",
     "gold price today",
   ],
+  alternates: { canonical: "https://xanggiau24h.vn/gia-vang" },
+  openGraph: {
+    title: "Giá Vàng Hôm Nay - SJC, PNJ, Thế Giới",
+    description: "Cập nhật giá vàng SJC, PNJ, giá vàng thế giới hôm nay. Biểu đồ biến động 30 ngày.",
+    url: "https://xanggiau24h.vn/gia-vang",
+    type: "article",
+    locale: "vi_VN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Vàng Hôm Nay - SJC, PNJ, Thế Giới",
+    description: "Cập nhật giá vàng SJC, PNJ, giá vàng thế giới hôm nay.",
+  },
 };
 
 export const revalidate = 300;
@@ -32,11 +45,40 @@ export default async function GoldPricePage() {
     console.error("[GoldPricePage] Failed to fetch data:", error);
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Giá vàng SJC hôm nay bao nhiêu?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Giá vàng SJC được cập nhật liên tục mỗi giờ tại XangGiau24h.vn. Truy cập trang giá vàng để xem bảng giá mới nhất.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Giá vàng được cập nhật khi nào?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Dữ liệu giá vàng được cập nhật mỗi giờ từ các nguồn SJC, PNJ và thế giới.",
+        },
+      },
+    ],
+  };
+
   return (
-    <GoldContent
-      goldData={goldData}
-      compareData={compareData}
-      historyData={historyData}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <GoldContent
+        goldData={goldData}
+        compareData={compareData}
+        historyData={historyData}
+      />
+    </>
   );
 }

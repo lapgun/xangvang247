@@ -8,6 +8,7 @@ from app.database import engine, Base, SessionLocal
 from app.routers import gold, fuel
 from app.routers import admin as admin_router
 from app.routers import tracking as tracking_router
+from app.routers import contact as contact_router
 from app.tasks.scheduler import start_scheduler, stop_scheduler
 from app.services.gold_service import seed_historical_gold_prices
 from app.services.fuel_service import seed_historical_fuel_prices
@@ -47,13 +48,14 @@ app.add_middleware(
     allow_origins=origins,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Authorization"],
 )
 
 app.include_router(gold.router, prefix="/api/gold", tags=["Gold"])
 app.include_router(fuel.router, prefix="/api/fuel", tags=["Fuel"])
 app.include_router(admin_router.router, prefix="/api/admin", tags=["Admin"])
 app.include_router(tracking_router.router, prefix="/api", tags=["Tracking"])
+app.include_router(contact_router.router, prefix="/api", tags=["Contact"])
 
 
 @app.get("/api/health")

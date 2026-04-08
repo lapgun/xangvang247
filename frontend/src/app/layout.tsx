@@ -41,6 +41,22 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://xanggiau24h.vn",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Xăng Giá Vàng Hôm Nay - XangGiau24h.vn",
+    description:
+      "Cập nhật giá xăng dầu, giá vàng SJC, PNJ, giá vàng thế giới mới nhất hôm nay.",
+  },
+  other: {
+    "theme-color": "#d97706",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: "/apple-icon",
+  },
 };
 
 export default function RootLayout({
@@ -74,10 +90,16 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col bg-gray-50">
         <AntdStyledComponentsRegistry>
           <AntdProvider>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-0 focus:left-0 focus:z-[9999] focus:bg-amber-600 focus:text-white focus:px-4 focus:py-2"
+            >
+              Chuyển đến nội dung chính
+            </a>
             <PageTracker />
             <AdPopup />
             <Header />
-            <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">
+            <main id="main-content" className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">
               {children}
             </main>
             <Footer />

@@ -13,6 +13,19 @@ export const metadata: Metadata = {
     "giá xăng E5",
     "giá dầu diesel",
   ],
+  alternates: { canonical: "https://xanggiau24h.vn/gia-xang" },
+  openGraph: {
+    title: "Giá Xăng Dầu Hôm Nay - RON 95, E5 RON 92, Diesel",
+    description: "Cập nhật giá xăng dầu Việt Nam hôm nay: RON 95-III, E5 RON 92, Diesel. Biểu đồ biến động.",
+    url: "https://xanggiau24h.vn/gia-xang",
+    type: "article",
+    locale: "vi_VN",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Xăng Dầu Hôm Nay",
+    description: "Giá xăng dầu Việt Nam hôm nay: RON 95, E5, Diesel.",
+  },
 };
 
 export const revalidate = 300;
@@ -32,11 +45,40 @@ export default async function FuelPricePage() {
     console.error("[FuelPricePage] Failed to fetch data:", error);
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Giá xăng RON 95 hôm nay bao nhiêu?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Giá xăng RON 95 được cập nhật theo kỳ điều hành của Bộ Công Thương. Xem giá mới nhất tại XangGiau24h.vn.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Giá xăng được điều chỉnh khi nào?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Giá xăng được điều chỉnh mỗi 10 ngày theo quy định của Bộ Công Thương.",
+        },
+      },
+    ],
+  };
+
   return (
-    <FuelContent
-      fuelData={fuelData}
-      compareData={compareData}
-      historyData={historyData}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <FuelContent
+        fuelData={fuelData}
+        compareData={compareData}
+        historyData={historyData}
+      />
+    </>
   );
 }

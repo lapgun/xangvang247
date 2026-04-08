@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     type: "article",
     locale: "vi_VN",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Vàng Thế Giới Hôm Nay - USD/oz",
+    description: "Giá vàng thế giới hôm nay, biểu đồ 30 ngày.",
+  },
 };
 
 export const revalidate = 300;

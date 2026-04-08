@@ -48,6 +48,9 @@ const Footer = React.memo(function Footer() {
                   <MailOutlined /> contact@xanggiau24h.vn
                 </Text>
                 <Text className="!text-gray-500 !text-xs flex items-center gap-1.5">
+                  <PhoneOutlined /> 0123.456.789
+                </Text>
+                <Text className="!text-gray-500 !text-xs flex items-center gap-1.5">
                   <EnvironmentOutlined /> Việt Nam
                 </Text>
               </Space>
@@ -61,20 +64,32 @@ const Footer = React.memo(function Footer() {
                 <Link href="/" className={linkClass}>
                   Trang chủ
                 </Link>
+                <Link href="/gia-vang" className={linkClass}>
+                  Giá vàng hôm nay
+                </Link>
+                <Link href="/gia-vang-sjc" className={linkClass}>
+                  Giá vàng SJC
+                </Link>
+                <Link href="/gia-vang-nhan" className={linkClass}>
+                  Giá vàng nhẫn
+                </Link>
+                <Link href="/gia-vang-the-gioi" className={linkClass}>
+                  Giá vàng thế giới
+                </Link>
                 <Link href="/gia-xang" className={linkClass}>
                   Giá xăng hôm nay
                 </Link>
-                <Link href="/gia-vang" className={linkClass}>
-                  Giá vàng hôm nay
+                <Link href="/gia-xang-ron-95" className={linkClass}>
+                  Giá xăng RON 95
                 </Link>
                 <Link href="/about" className={linkClass}>
                   Giới thiệu
                 </Link>
-                <Link href="/privacy-policy" className={linkClass}>
-                  Chính sách bảo mật
-                </Link>
                 <Link href="/contact" className={linkClass}>
                   Liên hệ
+                </Link>
+                <Link href="/privacy-policy" className={linkClass}>
+                  Chính sách bảo mật
                 </Link>
               </Space>
             </Col>

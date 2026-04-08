@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     type: "article",
     locale: "vi_VN",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Vàng SJC Hôm Nay - Cập Nhật Mới Nhất",
+    description: "Giá vàng SJC hôm nay bao nhiêu 1 lượng? Bảng giá mua vào bán ra.",
+  },
 };
 
 export const revalidate = 300;

@@ -1,18 +1,61 @@
 "use client";
 
-import React from "react";
-import { Typography, Card, Form, Input, Button, Row, Col, Space } from "antd";
+import React, { useState } from "react";
+import { Typography, Card, Form, Input, Button, Row, Col, Space, message, Spin } from "antd";
 import {
   MailOutlined,
   GlobalOutlined,
   SendOutlined,
   UserOutlined,
+  CheckCircleOutlined,
 } from "@ant-design/icons";
+import { getClientApiBase } from "@/lib/api";
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
 
+interface ContactFormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
 export default function ContactContent() {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (values: ContactFormData) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${getClientApiBase()}/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          message: values.message,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        message.error(err.detail || "Gửi tin nhắn thất bại");
+        return;
+      }
+
+      message.success("Tin nhắn đã được gửi thành công!");
+      form.resetFields();
+      setSubmitted(true);
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      message.error("Lỗi kết nối server");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-3xl mx-auto">
       <Title level={2}>Liên Hệ</Title>
@@ -52,42 +95,88 @@ export default function ContactContent() {
         </Col>
       </Row>
 
+      {submitted && (
+        <Card
+          style={{ marginBottom: 24, background: "#f6ffed", border: "1px solid #b7eb8f" }}
+          className="shadow-sm"
+        >
+          <Space>
+            <CheckCircleOutlined className="text-xl text-green-600" />
+            <div>
+              <Text strong className="block text-green-700">
+                Tin nhắn đã gửi thành công!
+              </Text>
+              <Text type="secondary">
+                Chúng tôi sẽ phản hồi trong vòng 24 giờ.
+              </Text>
+            </div>
+          </Space>
+        </Card>
+      )}
+
       <Card title="Gửi tin nhắn" className="shadow-sm">
-        <Form layout="vertical" autoComplete="off">
-          <Form.Item label="Họ tên" name="name">
-            <Input
-              prefix={<UserOutlined />}
-              placeholder="Nhập họ tên của bạn"
-              size="large"
-            />
-          </Form.Item>
-          <Form.Item label="Email" name="email">
-            <Input
-              prefix={<MailOutlined />}
-              placeholder="email@example.com"
-              size="large"
-              type="email"
-            />
-          </Form.Item>
-          <Form.Item label="Nội dung" name="message">
-            <TextArea
-              rows={5}
-              placeholder="Nhập nội dung tin nhắn..."
-              showCount
-              maxLength={2000}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              size="large"
-              icon={<SendOutlined />}
+        <Spin spinning={loading}>
+          <Form layout="vertical" form={form} onFinish={handleSubmit} autoComplete="off">
+            <Form.Item
+              label="Họ tên"
+              name="name"
+              rules={[
+                { required: true, message: "Vui lòng nhập họ tên" },
+                { min: 2, message: "Họ tên phải có ít nhất 2 ký tự" },
+              ]}
             >
-              Gửi tin nhắn
-            </Button>
-          </Form.Item>
-        </Form>
+              <Input
+                prefix={<UserOutlined />}
+                placeholder="Nhập họ tên của bạn"
+                size="large"
+                disabled={loading}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[
+                { required: true, message: "Vui lòng nhập email" },
+                { type: "email", message: "Email không hợp lệ" },
+              ]}
+            >
+              <Input
+                prefix={<MailOutlined />}
+                placeholder="email@example.com"
+                size="large"
+                type="email"
+                disabled={loading}
+              />
+            </Form.Item>
+            <Form.Item
+              label="Nội dung"
+              name="message"
+              rules={[
+                { required: true, message: "Vui lòng nhập nội dung" },
+                { min: 10, message: "Nội dung phải có ít nhất 10 ký tự" },
+              ]}
+            >
+              <TextArea
+                rows={5}
+                placeholder="Nhập nội dung tin nhắn..."
+                showCount
+                maxLength={2000}
+                disabled={loading}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                icon={<SendOutlined />}
+                loading={loading}
+              >
+                Gửi tin nhắn
+              </Button>
+            </Form.Item>
+          </Form>
+        </Spin>
       </Card>
     </div>
   );

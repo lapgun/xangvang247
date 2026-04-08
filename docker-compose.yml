@@ -27,6 +27,15 @@ services:
       DATABASE_URL: ${DATABASE_URL:-postgresql://postgres:postgres@db:5432/xanggiau24h}
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:3000}
       GOLD_API_KEY: ${GOLD_API_KEY:-}
+      SECRET_KEY: ${SECRET_KEY:-}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:-admin}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin123}
+      SMTP_SERVER: ${SMTP_SERVER:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      EMAIL_FROM: ${EMAIL_FROM:-}
+      EMAIL_TO_ADMIN: ${EMAIL_TO_ADMIN:-lapgun06@gmail.com}
     depends_on:
       db:
         condition: service_healthy

@@ -23,6 +23,11 @@ export const metadata: Metadata = {
     type: "article",
     locale: "vi_VN",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Giá Xăng RON 95 Hôm Nay - Mới Nhất",
+    description: "Giá xăng RON 95 hôm nay bao nhiêu 1 lít?",
+  },
 };
 
 export const revalidate = 300;

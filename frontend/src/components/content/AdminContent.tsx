@@ -16,6 +16,7 @@ import {
   Alert,
   Spin,
   message,
+  Divider,
 } from "antd";
 import {
   LoginOutlined,
@@ -27,6 +28,7 @@ import {
   EyeOutlined,
   TeamOutlined,
   RiseOutlined,
+  MailOutlined,
 } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
@@ -61,6 +63,87 @@ interface VisitorStats {
   total: { views: number; unique_visitors: number };
   daily: { date: string; views: number; unique_visitors: number }[];
   top_pages: { path: string; views: number }[];
+}
+
+function EmailTestCard({ token }: { token: string }) {
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+
+  const handleTestEmail = async (values: { email: string }) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${getClientApiBase()}/admin/email/test`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ to_email: values.email }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        message.error(err.detail || "Gửi email test thất bại");
+        return;
+      }
+
+      message.success("Email test đã được gửi thành công!");
+      form.resetFields();
+    } catch (error) {
+      message.error("Lỗi kết nối server");
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <Card
+      style={{ marginTop: 16 }}
+      title={
+        <Space>
+          <MailOutlined />
+          <span>Test Email Configuration</span>
+        </Space>
+      }
+    >
+      <Form form={form} layout="vertical" onFinish={handleTestEmail}>
+        <Form.Item
+          label="Email nhận test"
+          name="email"
+          rules={[
+            { required: true, message: "Vui lòng nhập email" },
+            { type: "email", message: "Email không hợp lệ" },
+          ]}
+        >
+          <Input
+            type="email"
+            placeholder="admin@example.com"
+            size="large"
+            prefix={<MailOutlined />}
+            disabled={loading}
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            loading={loading}
+            icon={<MailOutlined />}
+          >
+            Gửi Email Test
+          </Button>
+        </Form.Item>
+      </Form>
+      <Alert
+        type="info"
+        showIcon
+        message="Email Configuration"
+        description="Nếu email test được gửi thành công, điều đó có nghĩa là hệ thống email đã được cấu hình đúng. Người dùng sẽ nhận được email khi gửi form liên hệ."
+        style={{ marginTop: 12 }}
+      />
+    </Card>
+  );
 }
 
 function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
@@ -434,6 +517,8 @@ function Dashboard({ token, onLogout }: { token: string; onLogout: () => void })
           </Card>
         </Col>
       </Row>
+
+      <EmailTestCard token={token} />
 
       <Card style={{ marginTop: 16 }} title="Google AdSense Integration">
         <Alert
