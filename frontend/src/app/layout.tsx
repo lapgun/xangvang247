@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AdSenseScript from "@/components/AdSenseScript";
 import AdPopup from "@/components/AdPopup";
+import PageTracker from "@/components/PageTracker";
 import AntdProvider from "@/components/AntdProvider";
 import AntdStyledComponentsRegistry from "@/components/AntdRegistry";
 
@@ -73,6 +74,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col bg-gray-50">
         <AntdStyledComponentsRegistry>
           <AntdProvider>
+            <PageTracker />
             <AdPopup />
             <Header />
             <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6">

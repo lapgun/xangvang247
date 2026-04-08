@@ -24,14 +24,14 @@ import {
   ClockCircleOutlined,
   GoldOutlined,
   LogoutOutlined,
+  EyeOutlined,
+  TeamOutlined,
+  RiseOutlined,
 } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 
-const API_BASE =
-  typeof window !== "undefined"
-    ? `${window.location.protocol}//${window.location.hostname}:8080/api`
-    : "/api";
+import { getClientApiBase } from "@/lib/api";
 
 interface DashboardData {
   overview: {
@@ -56,6 +56,13 @@ interface PriceStats {
   fuel_updates: { date: string; count: number }[];
 }
 
+interface VisitorStats {
+  today: { views: number; unique_visitors: number };
+  total: { views: number; unique_visitors: number };
+  daily: { date: string; views: number; unique_visitors: number }[];
+  top_pages: { path: string; views: number }[];
+}
+
 function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +76,7 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
       formData.append("username", values.username);
       formData.append("password", values.password);
 
-      const res = await fetch(`${API_BASE}/admin/login`, {
+      const res = await fetch(`${getClientApiBase()}/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: formData.toString(),
@@ -145,11 +152,12 @@ function LoginForm({ onLogin }: { onLogin: (token: string) => void }) {
 function Dashboard({ token, onLogout }: { token: string; onLogout: () => void }) {
   const [dashboard, setDashboard] = useState<DashboardData | null>(null);
   const [stats, setStats] = useState<PriceStats | null>(null);
+  const [visitors, setVisitors] = useState<VisitorStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   const authFetch = useCallback(
     async (path: string) => {
-      const res = await fetch(`${API_BASE}${path}`, {
+      const res = await fetch(`${getClientApiBase()}${path}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.status === 401) {
@@ -164,12 +172,14 @@ function Dashboard({ token, onLogout }: { token: string; onLogout: () => void })
   useEffect(() => {
     async function load() {
       setLoading(true);
-      const [d, s] = await Promise.all([
+      const [d, s, v] = await Promise.all([
         authFetch("/admin/dashboard"),
         authFetch("/admin/stats/prices?days=7"),
+        authFetch("/admin/stats/visitors?days=30"),
       ]);
       setDashboard(d);
       setStats(s);
+      setVisitors(v);
       setLoading(false);
     }
     load();
@@ -287,6 +297,115 @@ function Dashboard({ token, onLogout }: { token: string; onLogout: () => void })
             <Text type="secondary" style={{ fontSize: 12 }}>
               Cập nhật cuối: {ov?.fuel_last_updated ?? "N/A"}
             </Text>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24}>
+          <Card
+            title={
+              <span>
+                <EyeOutlined /> Lượng truy cập website
+              </span>
+            }
+          >
+            <Row gutter={[16, 16]}>
+              <Col xs={12} sm={6}>
+                <Statistic
+                  title="Lượt xem hôm nay"
+                  value={visitors?.today.views ?? 0}
+                  prefix={<EyeOutlined />}
+                  valueStyle={{ color: "#1677ff" }}
+                />
+              </Col>
+              <Col xs={12} sm={6}>
+                <Statistic
+                  title="Khách hôm nay"
+                  value={visitors?.today.unique_visitors ?? 0}
+                  prefix={<TeamOutlined />}
+                  valueStyle={{ color: "#52c41a" }}
+                />
+              </Col>
+              <Col xs={12} sm={6}>
+                <Statistic
+                  title="Tổng lượt xem"
+                  value={visitors?.total.views ?? 0}
+                  prefix={<RiseOutlined />}
+                  valueStyle={{ color: "#722ed1" }}
+                />
+              </Col>
+              <Col xs={12} sm={6}>
+                <Statistic
+                  title="Tổng khách"
+                  value={visitors?.total.unique_visitors ?? 0}
+                  prefix={<TeamOutlined />}
+                  valueStyle={{ color: "#eb2f96" }}
+                />
+              </Col>
+            </Row>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
+        <Col xs={24} md={14}>
+          <Card title="Lượng truy cập 30 ngày gần nhất">
+            <Table
+              dataSource={visitors?.daily || []}
+              columns={[
+                { title: "Ngày", dataIndex: "date", key: "date" },
+                {
+                  title: "Lượt xem",
+                  dataIndex: "views",
+                  key: "views",
+                  render: (v: number) => (
+                    <Tag color="blue">{v.toLocaleString()}</Tag>
+                  ),
+                },
+                {
+                  title: "Khách",
+                  dataIndex: "unique_visitors",
+                  key: "unique_visitors",
+                  render: (v: number) => (
+                    <Tag color="green">{v.toLocaleString()}</Tag>
+                  ),
+                },
+              ]}
+              rowKey="date"
+              pagination={{ pageSize: 10, size: "small" }}
+              size="small"
+            />
+          </Card>
+        </Col>
+        <Col xs={24} md={10}>
+          <Card title="Trang được xem nhiều nhất hôm nay">
+            <Table
+              dataSource={visitors?.top_pages || []}
+              columns={[
+                {
+                  title: "Trang",
+                  dataIndex: "path",
+                  key: "path",
+                  render: (v: string) => (
+                    <Text code style={{ fontSize: 12 }}>
+                      {v}
+                    </Text>
+                  ),
+                },
+                {
+                  title: "Lượt xem",
+                  dataIndex: "views",
+                  key: "views",
+                  render: (v: number) => (
+                    <Tag color="gold">{v}</Tag>
+                  ),
+                },
+              ]}
+              rowKey="path"
+              pagination={false}
+              size="small"
+            />
           </Card>
         </Col>
       </Row>

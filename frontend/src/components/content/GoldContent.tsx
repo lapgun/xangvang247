@@ -47,8 +47,8 @@ export default function GoldContent({
         const data = await res.json();
         setChartData(data.data || []);
       }
-    } catch {
-      // keep current data
+    } catch (error) {
+      console.error("[GoldContent] Failed to fetch history:", error);
     } finally {
       setChartLoading(false);
     }

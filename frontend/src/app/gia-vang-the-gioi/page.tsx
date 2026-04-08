@@ -35,8 +35,8 @@ export default async function GoldWorldPage() {
       getGoldToday(),
       getGoldHistory("WORLD", 30),
     ]);
-  } catch {
-    // fallback
+  } catch (error) {
+    console.error("[GoldWorldPage] Failed to fetch data:", error);
   }
   return <GoldWorldContent goldData={goldData} historyData={historyData} />;
 }

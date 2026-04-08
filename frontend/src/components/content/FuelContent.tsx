@@ -50,8 +50,8 @@ export default function FuelContent({
         const data = await res.json();
         setChartData(data.data || []);
       }
-    } catch {
-      // keep current data
+    } catch (error) {
+      console.error("[FuelContent] Failed to fetch history:", error);
     } finally {
       setChartLoading(false);
     }

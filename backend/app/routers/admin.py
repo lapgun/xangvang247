@@ -14,6 +14,7 @@ from app.auth import (
 from app.models.user import User
 from app.models.gold import GoldPrice
 from app.models.fuel import FuelPrice
+from app.models.pageview import PageView
 
 router = APIRouter()
 
@@ -137,5 +138,82 @@ async def admin_price_stats(
         ],
         "fuel_updates": [
             {"date": str(row.price_date), "count": row.count} for row in fuel_by_date
+        ],
+    }
+
+
+@router.get("/stats/visitors")
+async def admin_visitor_stats(
+    days: int = 30,
+    current_user: User = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    """Visitor statistics for the last N days."""
+    today = date.today()
+    start_date = today - timedelta(days=days)
+
+    # Total pageviews today
+    views_today = (
+        db.query(func.count(PageView.id))
+        .filter(PageView.view_date == today)
+        .scalar()
+    )
+
+    # Unique visitors today (by ip_hash)
+    unique_today = (
+        db.query(func.count(func.distinct(PageView.ip_hash)))
+        .filter(PageView.view_date == today)
+        .scalar()
+    )
+
+    # Pageviews by date
+    daily_views = (
+        db.query(
+            PageView.view_date,
+            func.count(PageView.id).label("views"),
+            func.count(func.distinct(PageView.ip_hash)).label("unique_visitors"),
+        )
+        .filter(PageView.view_date >= start_date)
+        .group_by(PageView.view_date)
+        .order_by(PageView.view_date.desc())
+        .all()
+    )
+
+    # Top pages today
+    top_pages = (
+        db.query(
+            PageView.path,
+            func.count(PageView.id).label("views"),
+        )
+        .filter(PageView.view_date == today)
+        .group_by(PageView.path)
+        .order_by(func.count(PageView.id).desc())
+        .limit(10)
+        .all()
+    )
+
+    # Total all time
+    total_views = db.query(func.count(PageView.id)).scalar()
+    total_unique = db.query(func.count(func.distinct(PageView.ip_hash))).scalar()
+
+    return {
+        "today": {
+            "views": views_today,
+            "unique_visitors": unique_today,
+        },
+        "total": {
+            "views": total_views,
+            "unique_visitors": total_unique,
+        },
+        "daily": [
+            {
+                "date": str(row.view_date),
+                "views": row.views,
+                "unique_visitors": row.unique_visitors,
+            }
+            for row in daily_views
+        ],
+        "top_pages": [
+            {"path": row.path, "views": row.views} for row in top_pages
         ],
     }

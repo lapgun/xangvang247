@@ -59,8 +59,8 @@ export default function AdBanner({
         adsbygoogle.push({});
         pushed.current = true;
       }
-    } catch {
-      // AdSense not loaded yet
+    } catch (error) {
+      console.debug("[AdBanner] AdSense not loaded yet:", error);
     }
   }, [adClient, slot]);
 

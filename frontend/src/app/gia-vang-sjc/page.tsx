@@ -35,8 +35,8 @@ export default async function GoldSJCPage() {
       getGoldToday(),
       getGoldHistory("SJC", 30),
     ]);
-  } catch {
-    // fallback
+  } catch (error) {
+    console.error("[GoldSJCPage] Failed to fetch data:", error);
   }
   return <GoldSJCContent goldData={goldData} historyData={historyData} />;
 }

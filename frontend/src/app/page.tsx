@@ -16,8 +16,8 @@ export default async function HomePage() {
 
   try {
     [goldData, fuelData] = await Promise.all([getGoldToday(), getFuelToday()]);
-  } catch {
-    // Graceful fallback
+  } catch (error) {
+    console.error("[HomePage] Failed to fetch data:", error);
   }
 
   return <HomeContent goldData={goldData} fuelData={fuelData} />;

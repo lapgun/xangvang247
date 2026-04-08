@@ -28,8 +28,8 @@ export default async function GoldPricePage() {
       getGoldCompare(),
       getGoldHistory("SJC", 30),
     ]);
-  } catch {
-    // Graceful fallback
+  } catch (error) {
+    console.error("[GoldPricePage] Failed to fetch data:", error);
   }
 
   return (

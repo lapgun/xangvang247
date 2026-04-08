@@ -7,6 +7,15 @@ import {
 
 const API_BASE = "http://backend:8000/api";
 
+/**
+ * Client-side API base URL (browser context)
+ * Dùng cho các component "use client" cần gọi API từ browser
+ */
+export function getClientApiBase(): string {
+  if (typeof window === "undefined") return "/api";
+  return `${window.location.protocol}//${window.location.hostname}:8080/api`;
+}
+
 async function fetchAPI<T>(path: string): Promise<T> {
   const base = process.env.API_URL || API_BASE;
   const res = await fetch(`${base}${path}`, {
@@ -48,4 +57,22 @@ export async function getFuelHistory(
   days: number = 30
 ): Promise<FuelHistoryResponse> {
   return fetchAPI<FuelHistoryResponse>(`/fuel/history?fuel_type=${type}&days=${days}`);
+}
+
+// ===== Tracking API (client-side) =====
+export async function trackPageView(
+  path: string,
+  referrer: string | null,
+  signal?: AbortSignal
+): Promise<void> {
+  const base = getClientApiBase();
+  const res = await fetch(`${base}/track`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ path, referrer }),
+    signal,
+  });
+  if (!res.ok) {
+    throw new Error(`Track error: ${res.status}`);
+  }
 }

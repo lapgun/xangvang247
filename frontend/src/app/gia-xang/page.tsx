@@ -28,8 +28,8 @@ export default async function FuelPricePage() {
       getFuelCompare(),
       getFuelHistory("E5RON92-II", 30),
     ]);
-  } catch {
-    // Graceful fallback
+  } catch (error) {
+    console.error("[FuelPricePage] Failed to fetch data:", error);
   }
 
   return (

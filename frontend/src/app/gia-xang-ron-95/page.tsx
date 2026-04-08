@@ -35,8 +35,8 @@ export default async function FuelRON95Page() {
       getFuelToday(),
       getFuelHistory("RON95-III", 30),
     ]);
-  } catch {
-    // fallback
+  } catch (error) {
+    console.error("[FuelRON95Page] Failed to fetch data:", error);
   }
   return <FuelRON95Content fuelData={fuelData} historyData={historyData} />;
 }

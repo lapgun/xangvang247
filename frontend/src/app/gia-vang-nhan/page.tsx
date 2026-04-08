@@ -35,8 +35,8 @@ export default async function GoldNhanPage() {
       getGoldToday(),
       getGoldHistory("SJC_NHAN", 30),
     ]);
-  } catch {
-    // fallback
+  } catch (error) {
+    console.error("[GoldNhanPage] Failed to fetch data:", error);
   }
   return <GoldNhanContent goldData={goldData} historyData={historyData} />;
 }
