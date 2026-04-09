@@ -48,10 +48,16 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      target: deps
     restart: always
+    working_dir: /app
+    command: sh -c "if [ ! -x node_modules/.bin/next ]; then npm ci; fi && npm run dev -- --hostname 0.0.0.0 --port 3000"
     environment:
-      API_URL: ${API_URL:-http://backend:8000/api}
-      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://backend:8000/api}
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+      API_URL: http://backend:8000/api
+      NEXT_PUBLIC_API_URL: /api
       NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://xanggiau24h.vn}
       NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID:-}
       NEXT_PUBLIC_ADSENSE_CLIENT: ${NEXT_PUBLIC_ADSENSE_CLIENT:-}
@@ -59,6 +65,9 @@ services:
       - backend
     ports:
       - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
 
   nginx:
     image: nginx:alpine
@@ -74,3 +83,4 @@ services:
 
 volumes:
   postgres_data:
+  frontend_node_modules:

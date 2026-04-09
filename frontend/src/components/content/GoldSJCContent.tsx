@@ -27,7 +27,16 @@ export default function GoldSJCContent({ goldData, historyData }: Props) {
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(120, 53, 15, 0.62), rgba(202, 138, 4, 0.42)), url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 52%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           Giá Vàng SJC Hôm Nay
         </Title>
@@ -104,7 +113,6 @@ export default function GoldSJCContent({ goldData, historyData }: Props) {
                   </Text>
                 ),
               },
-              { key: "source", label: "Nguồn", align: "center" },
             ]}
             data={
               (goldData?.data

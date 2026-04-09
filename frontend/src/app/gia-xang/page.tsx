@@ -54,7 +54,7 @@ export default async function FuelPricePage() {
         name: "Giá xăng RON 95 hôm nay bao nhiêu?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Giá xăng RON 95 được cập nhật theo kỳ điều hành của Bộ Công Thương. Xem giá mới nhất tại XangGiau24h.vn.",
+          text: "Giá xăng RON 95 được cập nhật theo kỳ điều hành của Bộ Công Thương. Xem giá mới nhất tại XangVang24h.vn.",
         },
       },
       {

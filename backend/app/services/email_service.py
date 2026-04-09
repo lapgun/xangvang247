@@ -69,7 +69,7 @@ def send_email(
 def send_contact_email(name: str, email: str, message: str) -> bool:
     """Send contact form email to admin."""
     
-    subject = f"📧 Liên hệ từ {name} - XangGiau24h.vn"
+    subject = f"📧 Liên hệ từ {name} - XangVang24h.vn"
     
     text_body = f"""
 Tin nhắn liên hệ từ {name}
@@ -120,10 +120,10 @@ def is_email_configured() -> bool:
 def send_test_email(to_email: str = None) -> bool:
     """Send test email."""
     
-    subject = "🧪 Email Test - XangGiau24h.vn"
+    subject = "🧪 Email Test - XangVang24h.vn"
     
     text_body = """
-Đây là email test từ XangGiau24h.vn
+Đây là email test từ XangVang24h.vn
 
 Nếu bạn nhận được email này, điều đó có nghĩa là hệ thống email đang hoạt động bình thường.
 
@@ -135,7 +135,7 @@ Thời gian test: xanggiau24h.vn/admin
     <html>
         <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
             <h2 style="color: #f59e0b;">🧪 Email Test</h2>
-            <p>Đây là email test từ <strong>XangGiau24h.vn</strong></p>
+            <p>Đây là email test từ <strong>XangVang24h.vn</strong></p>
             <p>Nếu bạn nhận được email này, điều đó có nghĩa là hệ thống email đang hoạt động bình thường.</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="font-size: 12px; color: #999;">

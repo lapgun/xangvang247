@@ -54,7 +54,7 @@ export default async function GoldPricePage() {
         name: "Giá vàng SJC hôm nay bao nhiêu?",
         acceptedAnswer: {
           "@type": "Answer",
-          text: "Giá vàng SJC được cập nhật liên tục mỗi giờ tại XangGiau24h.vn. Truy cập trang giá vàng để xem bảng giá mới nhất.",
+          text: "Giá vàng SJC được cập nhật liên tục mỗi giờ tại XangVang24h.vn. Truy cập trang giá vàng để xem bảng giá mới nhất.",
         },
       },
       {

@@ -89,18 +89,92 @@ body {
   font-weight: bold !important;
 }
 
+/* ── Dropdown popup styling (Giá Vàng / Giá Xăng) ── */
+.ant-menu-submenu-popup {
+  padding-top: 8px !important;
+}
+
+/* Mũi tên nối dropdown với header - đặt trên wrapper, không bị clip */
+.ant-menu-submenu-popup::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 28px;
+  width: 14px;
+  height: 14px;
+  background: #d97706;
+  transform: rotate(45deg);
+  border-radius: 2px 0 0 0;
+  z-index: 9999;
+}
+
+/* Nền dropdown match màu cam header */
+.ant-menu-submenu-popup > ul {
+  background: linear-gradient(160deg, #d97706 0%, #f59e0b 100%) !important;
+  border-radius: 10px !important;
+  border: none !important;
+  box-shadow: 0 8px 24px rgba(217, 119, 6, 0.35) !important;
+  padding: 6px 0 !important;
+  position: relative;
+}
+
+/* Items trong dropdown */
+.ant-menu-submenu-popup .ant-menu-item {
+  color: #fff !important;
+  border-radius: 6px !important;
+  margin: 2px 6px !important;
+  padding: 0 16px !important;
+  font-weight: 500 !important;
+  transition: background 0.2s ease !important;
+}
+.ant-menu-submenu-popup .ant-menu-item a {
+  color: #fff !important;
+  font-size: 14px !important;
+}
+.ant-menu-submenu-popup .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+.ant-menu-submenu-popup .ant-menu-item:hover a {
+  color: #fff !important;
+}
+.ant-menu-submenu-popup .ant-menu-item-selected {
+  background: rgba(255, 255, 255, 0.25) !important;
+  font-weight: 700 !important;
+}
+.ant-menu-submenu-popup .ant-menu-item-selected a {
+  color: #fffbeb !important;
+  font-weight: 700 !important;
+}
+.ant-menu-submenu-popup .ant-menu-item .anticon {
+  color: #fff !important;
+}
+
 /* Table header styling */
 .ant-table-thead > tr > th {
-  background: #f59e0b !important;
-  color: #000 !important;
+  background: #f8fafc !important;
+  color: #1f2937 !important;
   font-weight: 600 !important;
   font-size: 14px !important;
-  border-bottom: 2px solid #d97706 !important;
+  border-bottom: 2px solid #cbd5e1 !important;
   padding: 12px 12px !important;
   white-space: nowrap;
 }
 .ant-table-thead > tr > th::before {
   display: none !important;
+}
+
+/* Gold routes: /gia-vang, /gia-vang-sjc, /gia-vang-nhan, /gia-vang-the-gioi */
+body.route-theme-gold .ant-table-thead > tr > th {
+  background: #fef3c7 !important;
+  color: #7c2d12 !important;
+  border-bottom: 2px solid #f59e0b !important;
+}
+
+/* Fuel routes: /gia-xang, /gia-xang-ron-95 */
+body.route-theme-fuel .ant-table-thead > tr > th {
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  border-bottom: 2px solid #22c55e !important;
 }
 /* Table scrolling fix */
 .ant-table {
@@ -113,8 +187,18 @@ body {
 }
 /* Hover on header */
 .ant-table-thead > tr > th:hover {
-  background: #d97706 !important;
-  color: #fff !important;
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+body.route-theme-gold .ant-table-thead > tr > th:hover {
+  background: #fde68a !important;
+  color: #78350f !important;
+}
+
+body.route-theme-fuel .ant-table-thead > tr > th:hover {
+  background: #bbf7d0 !important;
+  color: #14532d !important;
 }
 /* Row hover */
 .ant-table-tbody > tr:hover > td {

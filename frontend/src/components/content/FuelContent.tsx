@@ -78,7 +78,16 @@ export default function FuelContent({
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-green-500 via-emerald-600 to-teal-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(5, 46, 22, 0.62), rgba(13, 148, 136, 0.42)), url('https://plus.unsplash.com/premium_photo-1661586001439-9247198755ce?q=80&w=1600&auto=format&fit=crop')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 58%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           ⛽ Giá Xăng Dầu Hôm Nay
         </Title>
@@ -117,7 +126,6 @@ export default function FuelContent({
                 </Text>
               ),
             },
-            { key: "source", label: "Nguồn", align: "center" },
           ]}
           data={(fuelData?.data || []) as unknown as Record<string, unknown>[]}
         />

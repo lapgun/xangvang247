@@ -7,7 +7,6 @@ import {
   GoldOutlined,
   DashboardOutlined,
   InfoCircleOutlined,
-  HomeOutlined,
   MenuOutlined,
   GlobalOutlined,
   ExperimentOutlined,
@@ -19,11 +18,6 @@ const { Header: AntHeader } = Layout;
 const { useBreakpoint } = Grid;
 
 const menuItems = [
-  {
-    key: "/",
-    icon: <HomeOutlined />,
-    label: <Link href="/">Trang chủ</Link>,
-  },
   {
     key: "/gia-vang",
     icon: <GoldOutlined />,
@@ -70,7 +64,6 @@ const menuItems = [
 
 // Flat items for mobile drawer
 const mobileMenuItems = [
-  { key: "/", icon: <HomeOutlined />, label: <Link href="/">Trang chủ</Link> },
   { key: "/gia-vang", icon: <GoldOutlined />, label: <Link href="/gia-vang">Giá Vàng</Link> },
   { key: "/gia-vang-sjc", label: <Link href="/gia-vang-sjc">↳ Vàng SJC</Link> },
   { key: "/gia-vang-nhan", label: <Link href="/gia-vang-nhan">↳ Vàng Nhẫn</Link> },
@@ -119,11 +112,11 @@ const Header = React.memo(function Header() {
       {/* Top accent line */}
       <div style={{ height: 3, background: "linear-gradient(90deg, #fbbf24, #f59e0b, #d97706, #f59e0b, #fbbf24)" }} />
       <div className="max-w-6xl mx-auto w-full flex items-center gap-4 px-4" style={{ height: 56 }}>
-        <Link href="/" className="flex items-center gap-2.5 shrink-0 group" aria-label="XangGiau24h.vn - Trang chủ">
+        <Link href="/" className="flex items-center gap-2.5 shrink-0 group" aria-label="XangVang24h.vn - Trang chủ">
           <span className="text-2xl group-hover:scale-110 transition-transform" aria-hidden="true">💰</span>
           {screens.sm && (
             <Typography.Title level={4} style={logoTitleStyle}>
-              XangGiau24h.vn
+              XangVang24h.vn
             </Typography.Title>
           )}
         </Link>
@@ -156,7 +149,7 @@ const Header = React.memo(function Header() {
       <Drawer
         title={
           <span className="flex items-center gap-2">
-            <span aria-hidden="true">💰</span> XangGiau24h.vn
+            <span aria-hidden="true">💰</span> XangVang24h.vn
           </span>
         }
         placement="right"

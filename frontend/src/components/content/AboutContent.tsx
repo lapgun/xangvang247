@@ -29,11 +29,11 @@ const infoItems = [
 export default function AboutContent() {
   return (
     <div className="max-w-3xl mx-auto">
-      <Title level={2}>Giới Thiệu XangGiau24h.vn</Title>
+      <Title level={2}>Giới Thiệu XangVang24h.vn</Title>
 
       <Card className="shadow-sm mb-6">
         <Paragraph>
-          <Text strong>XangGiau24h.vn</Text> là website cung cấp thông tin giá
+          <Text strong>XangVang24h.vn</Text> là website cung cấp thông tin giá
           xăng dầu và giá vàng hôm nay tại Việt Nam, được cập nhật liên tục và
           miễn phí.
         </Paragraph>

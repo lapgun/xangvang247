@@ -61,7 +61,7 @@ export default function ContactContent() {
       <Title level={2}>Liên Hệ</Title>
 
       <Paragraph className="!text-gray-600">
-        Cảm ơn bạn đã quan tâm đến <Text strong>XangGiau24h.vn</Text>. Nếu bạn
+        Cảm ơn bạn đã quan tâm đến <Text strong>XangVang24h.vn</Text>. Nếu bạn
         có câu hỏi, góp ý hoặc muốn hợp tác, vui lòng liên hệ với chúng tôi
         qua các kênh sau:
       </Paragraph>

@@ -124,7 +124,7 @@ export default function PrivacyContent() {
       <Card className="shadow-sm">
         <Paragraph>
           Chính sách bảo mật này mô tả cách{" "}
-          <Text strong>XangGiau24h.vn</Text> thu thập, sử dụng và bảo vệ thông
+          <Text strong>XangVang24h.vn</Text> thu thập, sử dụng và bảo vệ thông
           tin khi bạn sử dụng website.
         </Paragraph>
 

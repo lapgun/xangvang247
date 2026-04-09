@@ -1,5 +1,4 @@
 import httpx
-import ssl
 from bs4 import BeautifulSoup
 from datetime import date, datetime, timedelta
 from sqlalchemy.orm import Session
@@ -11,9 +10,9 @@ from app.models.gold import GoldPrice
 async def fetch_world_gold_price() -> dict | None:
     """Lấy giá vàng thế giới từ nhiều nguồn API."""
     sources = [
-        _fetch_gold_from_goldapi,
-        _fetch_gold_from_metals_dev,
-        _fetch_gold_from_frankfurter,
+        _fetch_gold_from_yahoo_finance,
+        _fetch_gold_from_goldprice_org,
+        _fetch_gold_from_stooq,
     ]
     for source_fn in sources:
         result = await source_fn()
@@ -22,75 +21,87 @@ async def fetch_world_gold_price() -> dict | None:
     return None
 
 
-async def _fetch_gold_from_goldapi() -> dict | None:
-    """Lấy giá vàng từ GoldAPI.io (free tier: 300 req/month)."""
+async def _fetch_gold_from_yahoo_finance() -> dict | None:
+    """Lấy giá vàng thế giới từ Yahoo Finance (GC=F gold futures, miễn phí)."""
     try:
-        ssl_ctx = ssl.create_default_context()
-        ssl_ctx.check_hostname = False
-        ssl_ctx.verify_mode = ssl.CERT_NONE
-        async with httpx.AsyncClient(timeout=15, verify=ssl_ctx) as client:
+        async with httpx.AsyncClient(timeout=15, verify=False) as client:
             resp = await client.get(
-                "https://www.goldapi.io/api/XAU/USD",
-                headers={
-                    "x-access-token": "goldapi-demo",
-                    "Content-Type": "application/json",
-                },
+                "https://query1.finance.yahoo.com/v8/finance/chart/GC=F",
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
             )
             if resp.status_code == 200:
                 data = resp.json()
-                price = data.get("price", 0)
-                if price > 0:
+                price = data["chart"]["result"][0]["meta"]["regularMarketPrice"]
+                if price and float(price) > 0:
                     return {
                         "type": "WORLD",
                         "buy_price": float(price),
                         "sell_price": float(price),
                         "unit": "USD/oz",
-                        "source": "goldapi.io",
+                        "source": "finance.yahoo.com",
                     }
     except Exception as e:
-        print(f"[WARN] _fetch_gold_from_goldapi: {e}")
+        print(f"[WARN] _fetch_gold_from_yahoo_finance: {e}")
     return None
 
 
-async def _fetch_gold_from_metals_dev() -> dict | None:
-    """Lấy giá vàng từ metals.dev (free)."""
+async def _fetch_gold_from_goldprice_org() -> dict | None:
+    """Lấy giá vàng từ goldprice.org (miễn phí, không cần API key)."""
     try:
         async with httpx.AsyncClient(timeout=15, verify=False) as client:
-            resp = await client.get("https://api.metals.dev/v1/latest?api_key=demo&currency=USD&unit=toz")
+            resp = await client.get(
+                "https://data-asg.goldprice.org/dbXRates/USD",
+                headers={
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+                    "Referer": "https://goldprice.org/",
+                    "Origin": "https://goldprice.org",
+                },
+            )
             if resp.status_code == 200:
                 data = resp.json()
-                gold_price = data.get("metals", {}).get("gold", 0)
-                if gold_price > 0:
-                    return {
-                        "type": "WORLD",
-                        "buy_price": float(gold_price),
-                        "sell_price": float(gold_price),
-                        "unit": "USD/oz",
-                        "source": "metals.dev",
-                    }
+                for item in data.get("items", []):
+                    if item.get("curr") == "XAU":
+                        xau_per_usd = item.get("xauPrice", 0)
+                        if xau_per_usd and float(xau_per_usd) > 0:
+                            usd_per_oz = round(1.0 / float(xau_per_usd), 2)
+                            if usd_per_oz > 100:
+                                return {
+                                    "type": "WORLD",
+                                    "buy_price": usd_per_oz,
+                                    "sell_price": usd_per_oz,
+                                    "unit": "USD/oz",
+                                    "source": "goldprice.org",
+                                }
     except Exception as e:
-        print(f"[WARN] _fetch_gold_from_metals_dev: {e}")
+        print(f"[WARN] _fetch_gold_from_goldprice_org: {e}")
     return None
 
 
-async def _fetch_gold_from_frankfurter() -> dict | None:
-    """Lấy giá gold ước tính từ Frankfurter (free, luôn khả dụng)."""
+async def _fetch_gold_from_stooq() -> dict | None:
+    """Lấy giá vàng từ Stooq.com CSV API (miễn phí, không cần API key)."""
     try:
-        async with httpx.AsyncClient(timeout=15) as client:
-            resp = await client.get("https://api.frankfurter.app/latest?from=XAU&to=USD")
+        async with httpx.AsyncClient(timeout=15, verify=False) as client:
+            resp = await client.get(
+                "https://stooq.com/q/l/?s=xauusd&f=sd2t2ohlcv&h&e=csv",
+                headers={"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"},
+            )
             if resp.status_code == 200:
-                data = resp.json()
-                usd_rate = data.get("rates", {}).get("USD", 0)
-                if usd_rate > 0:
-                    return {
-                        "type": "WORLD",
-                        "buy_price": float(usd_rate),
-                        "sell_price": float(usd_rate),
-                        "unit": "USD/oz",
-                        "source": "frankfurter.app",
-                    }
+                lines = resp.text.strip().split("\n")
+                if len(lines) >= 2:
+                    # CSV: Symbol,Date,Time,Open,High,Low,Close,Volume
+                    parts = lines[1].split(",")
+                    if len(parts) > 6:
+                        close_price = float(parts[6])
+                        if close_price > 100:
+                            return {
+                                "type": "WORLD",
+                                "buy_price": close_price,
+                                "sell_price": close_price,
+                                "unit": "USD/oz",
+                                "source": "stooq.com",
+                            }
     except Exception as e:
-        print(f"[WARN] _fetch_gold_from_frankfurter: {e}")
+        print(f"[WARN] _fetch_gold_from_stooq: {e}")
     return None
 
 

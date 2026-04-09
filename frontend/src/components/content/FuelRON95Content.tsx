@@ -30,7 +30,16 @@ export default function FuelRON95Content({ fuelData, historyData }: Props) {
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-blue-500 via-blue-600 to-cyan-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(10, 25, 47, 0.64), rgba(37, 99, 235, 0.44)), url('https://plus.unsplash.com/premium_photo-1661586001439-9247198755ce?q=80&w=1600&auto=format&fit=crop')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 48%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           Giá Xăng RON 95 Hôm Nay
         </Title>
@@ -93,10 +102,6 @@ export default function FuelRON95Content({ fuelData, historyData }: Props) {
                   align: "right" as const,
                   render: (v) =>
                     v ? `${formatVND(v as number)} đ` : "—",
-                },
-                {
-                  key: "source",
-                  label: "Nguồn",
                 },
               ]}
               data={ron95Items as unknown as Record<string, unknown>[]}

@@ -33,7 +33,16 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
   return (
     <div>
       {/* Hero Banner */}
-      <div className="bg-gradient-to-r from-amber-500 via-amber-600 to-yellow-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(10, 25, 47, 0.62), rgba(122, 74, 5, 0.5)), url('https://plus.unsplash.com/premium_photo-1661586001439-9247198755ce?q=80&w=1600&auto=format&fit=crop'), url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80')",
+          backgroundSize: "cover, 52% 100%, 48% 100%",
+          backgroundPosition: "center, left center, right center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           Giá Xăng Giá Vàng Hôm Nay
         </Title>
@@ -130,7 +139,6 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
                 </Text>
               ),
             },
-            { key: "source", label: "Nguồn", align: "center" },
           ]}
           data={(goldData?.data || []) as unknown as Record<string, unknown>[]}
         />
@@ -179,7 +187,6 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
                 </Text>
               ),
             },
-            { key: "source", label: "Nguồn", align: "center" },
           ]}
           data={(fuelData?.data || []) as unknown as Record<string, unknown>[]}
         />
@@ -191,7 +198,7 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
       <section className="bg-white rounded-xl p-6 border-l-4 border-amber-500" style={{ boxShadow: "0 1px 3px 0 rgba(0,0,0,0.08)" }}>
         <Title level={4}>📌 Thông tin giá xăng giá vàng hôm nay</Title>
         <Paragraph>
-          <Text strong>XangGiau24h.vn</Text> cung cấp thông tin cập nhật giá
+          <Text strong>XangVang24h.vn</Text> cung cấp thông tin cập nhật giá
           xăng dầu và giá vàng mới nhất tại Việt Nam. Giá vàng SJC, PNJ, DOJI
           và giá vàng thế giới được cập nhật liên tục mỗi giờ.
         </Paragraph>

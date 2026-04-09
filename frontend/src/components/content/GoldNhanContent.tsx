@@ -31,7 +31,16 @@ export default function GoldNhanContent({ goldData, historyData }: Props) {
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-rose-500 via-pink-500 to-fuchsia-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(131, 24, 67, 0.58), rgba(190, 24, 93, 0.42)), url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 55%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           Giá Vàng Nhẫn Hôm Nay
         </Title>
@@ -101,10 +110,6 @@ export default function GoldNhanContent({ goldData, historyData }: Props) {
                   align: "right" as const,
                   render: (v) =>
                     v ? `${formatVND(v as number)} đ` : "—",
-                },
-                {
-                  key: "source",
-                  label: "Nguồn",
                 },
               ]}
               data={ringItems as unknown as Record<string, unknown>[]}

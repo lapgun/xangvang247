@@ -26,7 +26,16 @@ export default function GoldWorldContent({ goldData, historyData }: Props) {
 
   return (
     <div>
-      <div className="bg-gradient-to-r from-emerald-500 via-teal-600 to-cyan-500 rounded-2xl p-6 mb-8 text-white shadow-lg">
+      <div
+        className="rounded-2xl p-6 mb-8 text-white shadow-lg"
+        style={{
+          backgroundImage:
+            "linear-gradient(110deg, rgba(6, 95, 70, 0.6), rgba(14, 116, 144, 0.42)), url('https://images.unsplash.com/photo-1610375461246-83df859d849d?auto=format&fit=crop&w=1600&q=80')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 50%",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <Title level={2} className="!mb-1 !text-white">
           Giá Vàng Thế Giới Hôm Nay
         </Title>

@@ -12,8 +12,7 @@ const API_BASE = "http://backend:8000/api";
  * Dùng cho các component "use client" cần gọi API từ browser
  */
 export function getClientApiBase(): string {
-  if (typeof window === "undefined") return "/api";
-  return `${window.location.protocol}//${window.location.hostname}:8080/api`;
+  return "/api";
 }
 
 async function fetchAPI<T>(path: string): Promise<T> {

@@ -36,7 +36,7 @@ const Footer = React.memo(function Footer() {
               <div className="flex items-center gap-2.5 mb-4">
                 <span className="text-3xl">💰</span>
                 <Title level={4} style={{ color: "#fff", margin: 0, fontWeight: 700 }}>
-                  XangGiau24h.vn
+                  XangVang24h.vn
                 </Title>
               </div>
               <Paragraph className="!text-gray-400 !text-sm !mb-5 !leading-relaxed">
@@ -121,7 +121,7 @@ const Footer = React.memo(function Footer() {
       <div style={{ background: "#0f172a", borderTop: "1px solid rgba(251,191,36,0.15)" }}>
         <div className="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <Text className="!text-gray-500 !text-xs">
-            &copy; {year} XangGiau24h.vn. All rights reserved.
+            &copy; {year} XangVang24h.vn. All rights reserved.
           </Text>
           <div className="flex items-center gap-4">
             <Link href="/privacy-policy" className="text-gray-500 hover:text-amber-400 text-xs transition-colors">
