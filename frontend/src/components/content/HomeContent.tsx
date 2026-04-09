@@ -99,9 +99,9 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
           </Title>
           <Link
             href="/gia-vang"
-            className="text-amber-600 hover:text-amber-700 font-medium text-sm flex items-center gap-1"
+            className="group inline-flex items-center gap-1.5 text-amber-700 bg-amber-50 hover:bg-amber-100 border border-amber-200 hover:border-amber-300 rounded-full px-3 py-1.5 font-semibold text-sm transition-all duration-200 shadow-sm hover:shadow"
           >
-            Xem chi tiết <RightOutlined className="text-xs" />
+            Xem chi tiết <RightOutlined className="text-xs transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
         <PriceTable
@@ -153,9 +153,9 @@ export default function HomeContent({ goldData, fuelData }: HomeContentProps) {
           </Title>
           <Link
             href="/gia-xang"
-            className="text-green-600 hover:text-green-700 font-medium text-sm flex items-center gap-1"
+            className="group inline-flex items-center gap-1.5 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 hover:border-emerald-300 rounded-full px-3 py-1.5 font-semibold text-sm transition-all duration-200 shadow-sm hover:shadow"
           >
-            Xem chi tiết <RightOutlined className="text-xs" />
+            Xem chi tiết <RightOutlined className="text-xs transition-transform duration-200 group-hover:translate-x-1" />
           </Link>
         </div>
         <PriceTable
