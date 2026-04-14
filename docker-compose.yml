@@ -58,7 +58,7 @@ services:
       CHOKIDAR_USEPOLLING: "true"
       API_URL: http://backend:8000/api
       NEXT_PUBLIC_API_URL: /api
-      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://xanggiau24h.vn}
+      NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL:-https://xangvang24h.vn}
       NEXT_PUBLIC_GA_ID: ${NEXT_PUBLIC_GA_ID:-}
       NEXT_PUBLIC_ADSENSE_CLIENT: ${NEXT_PUBLIC_ADSENSE_CLIENT:-}
     depends_on:
@@ -81,6 +81,25 @@ services:
       - frontend
       - backend
 
+  n8n:
+    image: n8nio/n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    env_file:
+      - ./n8n/workflows/.env
+    environment:
+      N8N_HOST: localhost
+      N8N_PORT: 5678
+      N8N_PROTOCOL: http
+      SITE_API_BASE_URL: http://backend:8000/api
+      SITE_PUBLIC_URL: ${NEXT_PUBLIC_SITE_URL:-https://xangvang24h.vn}
+    depends_on:
+      - backend
+    volumes:
+      - n8n_data:/home/node/.n8n
+
 volumes:
   postgres_data:
   frontend_node_modules:
+  n8n_data:

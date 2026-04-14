@@ -9,7 +9,10 @@ import RouteThemeClass from "@/components/RouteThemeClass";
 import AntdProvider from "@/components/AntdProvider";
 import AntdStyledComponentsRegistry from "@/components/AntdRegistry";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://xangvang24h.vn";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Giá Xăng Giá Vàng Hôm Nay - XangVang24h.vn",
     template: "%s | XangVang24h.vn",
@@ -30,7 +33,7 @@ export const metadata: Metadata = {
     title: "Giá Xăng Giá Vàng Hôm Nay - XangVang24h.vn",
     description:
       "Cập nhật giá xăng dầu, giá vàng SJC, PNJ, giá vàng thế giới mới nhất hôm nay.",
-    url: "https://xanggiau24h.vn",
+    url: SITE_URL,
     siteName: "XangVang24h.vn",
     locale: "vi_VN",
     type: "website",
@@ -40,7 +43,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "https://xanggiau24h.vn",
+    canonical: SITE_URL,
   },
   twitter: {
     card: "summary_large_image",
@@ -69,12 +72,12 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "XangVang24h.vn",
-    url: "https://xanggiau24h.vn",
+    url: SITE_URL,
     description:
       "Cập nhật giá xăng dầu, giá vàng SJC, PNJ, giá vàng thế giới hôm nay.",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://xanggiau24h.vn/?q={search_term_string}",
+      target: `${SITE_URL}/?q={search_term_string}`,
       "query-input": "required name=search_term_string",
     },
   };

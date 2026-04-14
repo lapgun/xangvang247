@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.database import engine, Base, SessionLocal
 from app.routers import gold, fuel
+from app.routers import social as social_router
 from app.routers import admin as admin_router
 from app.routers import tracking as tracking_router
 from app.routers import contact as contact_router
@@ -53,6 +54,7 @@ app.add_middleware(
 
 app.include_router(gold.router, prefix="/api/gold", tags=["Gold"])
 app.include_router(fuel.router, prefix="/api/fuel", tags=["Fuel"])
+app.include_router(social_router.router, prefix="/api/social", tags=["Social"])
 app.include_router(admin_router.router, prefix="/api/admin", tags=["Admin"])
 app.include_router(tracking_router.router, prefix="/api", tags=["Tracking"])
 app.include_router(contact_router.router, prefix="/api", tags=["Contact"])

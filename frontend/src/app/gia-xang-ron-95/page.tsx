@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "giá xăng hôm nay",
     "giá xăng Petrolimex",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-xang-ron-95" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-xang-ron-95" },
   openGraph: {
     title: "Giá Xăng RON 95 Hôm Nay - Mới Nhất",
     description:
       "Giá xăng RON 95 hôm nay bao nhiêu 1 lít? Bảng giá chi tiết, biểu đồ 30 ngày.",
-    url: "https://xanggiau24h.vn/gia-xang-ron-95",
+    url: "https://xangvang24h.vn/gia-xang-ron-95",
     type: "article",
     locale: "vi_VN",
   },

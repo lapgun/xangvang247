@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     "giá xăng E5",
     "giá dầu diesel",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-xang" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-xang" },
   openGraph: {
     title: "Giá Xăng Dầu Hôm Nay - RON 95, E5 RON 92, Diesel",
     description: "Cập nhật giá xăng dầu Việt Nam hôm nay: RON 95-III, E5 RON 92, Diesel. Biểu đồ biến động.",
-    url: "https://xanggiau24h.vn/gia-xang",
+    url: "https://xangvang24h.vn/gia-xang",
     type: "article",
     locale: "vi_VN",
   },

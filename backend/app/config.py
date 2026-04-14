@@ -23,7 +23,7 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_user: str = ""
     smtp_password: str = ""
-    email_from: str = "contact@xanggiau24h.vn"
+    email_from: str = "contact@xangvang24h.vn"
     email_to_admin: str = "lapgun06@gmail.com"
 
     class Config:

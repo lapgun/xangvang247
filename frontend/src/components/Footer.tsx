@@ -45,7 +45,7 @@ const Footer = React.memo(function Footer() {
               </Paragraph>
               <Space direction="vertical" size={6}>
                 <Text className="!text-gray-500 !text-xs flex items-center gap-1.5">
-                  <MailOutlined /> contact@xanggiau24h.vn
+                  <MailOutlined /> contact@xangvang24h.vn
                 </Text>
                 <Text className="!text-gray-500 !text-xs flex items-center gap-1.5">
                   <PhoneOutlined /> 0123.456.789

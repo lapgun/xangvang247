@@ -80,7 +80,7 @@ Nội dung:
 {message}
 
 ---
-Từ: https://xanggiau24h.vn/contact
+Từ: https://xangvang24h.vn/contact
     """
     
     html_body = f"""
@@ -96,7 +96,7 @@ Từ: https://xanggiau24h.vn/contact
             </p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="font-size: 12px; color: #999;">
-                Tin nhắn từ: <a href="https://xanggiau24h.vn/contact">https://xanggiau24h.vn/contact</a>
+                Tin nhắn từ: <a href="https://xangvang24h.vn/contact">https://xangvang24h.vn/contact</a>
             </p>
         </body>
     </html>
@@ -128,7 +128,7 @@ def send_test_email(to_email: str = None) -> bool:
 Nếu bạn nhận được email này, điều đó có nghĩa là hệ thống email đang hoạt động bình thường.
 
 ---
-Thời gian test: xanggiau24h.vn/admin
+Thời gian test: xangvang24h.vn/admin
     """
     
     html_body = """
@@ -139,7 +139,7 @@ Thời gian test: xanggiau24h.vn/admin
             <p>Nếu bạn nhận được email này, điều đó có nghĩa là hệ thống email đang hoạt động bình thường.</p>
             <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
             <p style="font-size: 12px; color: #999;">
-                Test từ: <a href="https://xanggiau24h.vn/admin">Admin Dashboard</a>
+                Test từ: <a href="https://xangvang24h.vn/admin">Admin Dashboard</a>
             </p>
         </body>
     </html>

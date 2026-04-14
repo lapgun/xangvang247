@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "giá vàng SJC mua vào bán ra",
     "bảng giá vàng SJC",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-vang-sjc" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-vang-sjc" },
   openGraph: {
     title: "Giá Vàng SJC Hôm Nay - Cập Nhật Mới Nhất",
     description:
       "Giá vàng SJC hôm nay bao nhiêu 1 lượng? Bảng giá mua vào bán ra, biểu đồ biến động 30 ngày.",
-    url: "https://xanggiau24h.vn/gia-vang-sjc",
+    url: "https://xangvang24h.vn/gia-vang-sjc",
     type: "article",
     locale: "vi_VN",
   },

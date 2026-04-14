@@ -13,7 +13,7 @@ const AD_PLACEHOLDERS = [
   {
     bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     title: "Quảng cáo hiển thị tại đây",
-    sub: "Liên hệ đặt banner: ads@xanggiau24h.vn",
+    sub: "Liên hệ đặt banner: ads@xangvang24h.vn",
   },
   {
     bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",

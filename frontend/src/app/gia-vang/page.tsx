@@ -13,11 +13,11 @@ export const metadata: Metadata = {
     "giá vàng thế giới",
     "gold price today",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-vang" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-vang" },
   openGraph: {
     title: "Giá Vàng Hôm Nay - SJC, PNJ, Thế Giới",
     description: "Cập nhật giá vàng SJC, PNJ, giá vàng thế giới hôm nay. Biểu đồ biến động 30 ngày.",
-    url: "https://xanggiau24h.vn/gia-vang",
+    url: "https://xangvang24h.vn/gia-vang",
     type: "article",
     locale: "vi_VN",
   },

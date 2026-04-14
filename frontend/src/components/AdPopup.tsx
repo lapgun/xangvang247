@@ -8,7 +8,7 @@ const AD_CONTENTS = [
   {
     bg: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     title: "📢 Quảng cáo",
-    desc: "Liên hệ đặt quảng cáo: ads@xanggiau24h.vn",
+    desc: "Liên hệ đặt quảng cáo: ads@xangvang24h.vn",
   },
   {
     bg: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",

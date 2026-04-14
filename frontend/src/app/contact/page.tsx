@@ -5,11 +5,11 @@ export const metadata: Metadata = {
   title: "Liên Hệ",
   description:
     "Liên hệ với XangVang24h.vn. Gửi câu hỏi, góp ý hoặc phản hồi cho chúng tôi.",
-  alternates: { canonical: "https://xanggiau24h.vn/contact" },
+  alternates: { canonical: "https://xangvang24h.vn/contact" },
   openGraph: {
     title: "Liên Hệ - XangVang24h.vn",
     description: "Liên hệ với XangVang24h.vn. Gửi câu hỏi, góp ý hoặc phản hồi.",
-    url: "https://xanggiau24h.vn/contact",
+    url: "https://xangvang24h.vn/contact",
     type: "website",
     locale: "vi_VN",
   },

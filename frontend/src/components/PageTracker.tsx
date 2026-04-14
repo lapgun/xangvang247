@@ -1,11 +1,17 @@
 "use client";
 
+import { useMemo } from "react";
 import { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { trackPageView } from "@/lib/api";
 
 export default function PageTracker() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const fullPath = useMemo(() => {
+    const query = searchParams.toString();
+    return query ? `${pathname}?${query}` : pathname;
+  }, [pathname, searchParams]);
 
   useEffect(() => {
     // Don't track admin pages
@@ -14,7 +20,7 @@ export default function PageTracker() {
     const controller = new AbortController();
 
     trackPageView(
-      pathname,
+      fullPath,
       document.referrer || null,
       controller.signal
     ).catch((err) => {
@@ -23,7 +29,7 @@ export default function PageTracker() {
     });
 
     return () => controller.abort();
-  }, [pathname]);
+  }, [pathname, fullPath]);
 
   return null;
 }

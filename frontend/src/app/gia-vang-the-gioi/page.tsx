@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "vàng thế giới USD",
     "biểu đồ giá vàng thế giới",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-vang-the-gioi" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-vang-the-gioi" },
   openGraph: {
     title: "Giá Vàng Thế Giới Hôm Nay - USD/oz",
     description:
       "Giá vàng thế giới hôm nay, biểu đồ 30 ngày, phân tích xu hướng.",
-    url: "https://xanggiau24h.vn/gia-vang-the-gioi",
+    url: "https://xangvang24h.vn/gia-vang-the-gioi",
     type: "article",
     locale: "vi_VN",
   },

@@ -14,12 +14,12 @@ export const metadata: Metadata = {
     "vàng nhẫn PNJ",
     "giá vàng nhẫn trơn",
   ],
-  alternates: { canonical: "https://xanggiau24h.vn/gia-vang-nhan" },
+  alternates: { canonical: "https://xangvang24h.vn/gia-vang-nhan" },
   openGraph: {
     title: "Giá Vàng Nhẫn SJC Hôm Nay - 9999",
     description:
       "Giá vàng nhẫn SJC 9999 hôm nay, so sánh SJC vs PNJ, biểu đồ 30 ngày.",
-    url: "https://xanggiau24h.vn/gia-vang-nhan",
+    url: "https://xangvang24h.vn/gia-vang-nhan",
     type: "article",
     locale: "vi_VN",
   },

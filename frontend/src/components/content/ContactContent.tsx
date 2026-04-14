@@ -75,7 +75,7 @@ export default function ContactContent() {
                 <Text strong className="block">
                   Email
                 </Text>
-                <Text type="secondary">contact@xanggiau24h.vn</Text>
+                <Text type="secondary">contact@xangvang24h.vn</Text>
               </div>
             </Space>
           </Card>
@@ -88,7 +88,7 @@ export default function ContactContent() {
                 <Text strong className="block">
                   Website
                 </Text>
-                <Text type="secondary">https://xanggiau24h.vn</Text>
+                <Text type="secondary">https://xangvang24h.vn</Text>
               </div>
             </Space>
           </Card>
