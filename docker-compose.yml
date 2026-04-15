@@ -36,6 +36,16 @@ services:
       SMTP_PASSWORD: ${SMTP_PASSWORD:-}
       EMAIL_FROM: ${EMAIL_FROM:-}
       EMAIL_TO_ADMIN: ${EMAIL_TO_ADMIN:-lapgun06@gmail.com}
+      SOCIAL_AUTO_POST_ENABLED: ${SOCIAL_AUTO_POST_ENABLED:-true}
+      SOCIAL_POST_HOUR: ${SOCIAL_POST_HOUR:-8}
+      SOCIAL_POST_MINUTE: ${SOCIAL_POST_MINUTE:-5}
+      SOCIAL_POST_INITIAL_RUN: ${SOCIAL_POST_INITIAL_RUN:-false}
+      ALLOW_DUPLICATE_POST: ${ALLOW_DUPLICATE_POST:-false}
+      FB_PAGE_ID: ${FB_PAGE_ID:-}
+      FB_PAGE_ACCESS_TOKEN: ${FB_PAGE_ACCESS_TOKEN:-}
+      FB_PAGE_TARGETS_JSON: ${FB_PAGE_TARGETS_JSON:-}
+      TIKTOK_WEBHOOK_URL: ${TIKTOK_WEBHOOK_URL:-}
+      TIKTOK_TEST_KEY: ${TIKTOK_TEST_KEY:-}
     depends_on:
       db:
         condition: service_healthy
@@ -81,25 +91,6 @@ services:
       - frontend
       - backend
 
-  n8n:
-    image: n8nio/n8n:latest
-    restart: always
-    ports:
-      - "5678:5678"
-    env_file:
-      - ./n8n/workflows/.env
-    environment:
-      N8N_HOST: localhost
-      N8N_PORT: 5678
-      N8N_PROTOCOL: http
-      SITE_API_BASE_URL: http://backend:8000/api
-      SITE_PUBLIC_URL: ${NEXT_PUBLIC_SITE_URL:-https://xangvang24h.vn}
-    depends_on:
-      - backend
-    volumes:
-      - n8n_data:/home/node/.n8n
-
 volumes:
   postgres_data:
   frontend_node_modules:
-  n8n_data:

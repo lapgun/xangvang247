@@ -154,7 +154,7 @@ async def social_summary(
     utm_campaign: str = Query(default="daily-update"),
     db: Session = Depends(get_db),
 ):
-    """Tóm tắt dữ liệu social: giá chính + link UTM + caption mẫu cho n8n."""
+    """Tóm tắt dữ liệu social: giá chính + link UTM + caption mẫu."""
     return _build_summary_payload(
         db=db,
         utm_source=utm_source,

@@ -26,6 +26,19 @@ class Settings(BaseSettings):
     email_from: str = "contact@xangvang24h.vn"
     email_to_admin: str = "lapgun06@gmail.com"
 
+    # Social autopost settings
+    social_auto_post_enabled: bool = True
+    social_post_hour: int = 8
+    social_post_minute: int = 5
+    social_post_initial_run: bool = False
+    allow_duplicate_post: bool = False
+    fb_page_id: str = ""
+    fb_page_access_token: str = ""
+    # JSON list format: [{"page_id":"...","access_token":"..."}, ...]
+    fb_page_targets_json: str = ""
+    tiktok_webhook_url: str = ""
+    tiktok_test_key: str = ""
+
     class Config:
         env_file = ".env"
 

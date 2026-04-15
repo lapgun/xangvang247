@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 
@@ -15,8 +16,16 @@ from app.models.user import User
 from app.models.gold import GoldPrice
 from app.models.fuel import FuelPrice
 from app.models.pageview import PageView
+from app.config import settings
+from app.services.social_post_service import run_social_autopost
 
 router = APIRouter()
+
+
+class SocialJobTestRequest(BaseModel):
+    force: bool = True
+    test_tiktok: bool = False
+    tiktok_test_key: str | None = None
 
 
 @router.post("/login")
@@ -217,3 +226,33 @@ async def admin_visitor_stats(
             {"path": row.path, "views": row.views} for row in top_pages
         ],
     }
+
+
+@router.post("/social/test")
+async def admin_test_social_job(
+    body: SocialJobTestRequest,
+    current_user: User = Depends(get_current_admin),
+    db: Session = Depends(get_db),
+):
+    """Trigger social autopost job manually from admin."""
+    _ = current_user
+
+    if body.test_tiktok:
+        if not settings.tiktok_test_key:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="TIKTOK_TEST_KEY chưa được cấu hình",
+            )
+        if body.tiktok_test_key != settings.tiktok_test_key:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="Tiktok test key không hợp lệ",
+            )
+
+    result = run_social_autopost(
+        db,
+        force=body.force,
+        tiktok_test_mode=body.test_tiktok,
+        tiktok_test_key=body.tiktok_test_key,
+    )
+    return result

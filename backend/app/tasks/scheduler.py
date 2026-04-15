@@ -1,6 +1,7 @@
 import asyncio
 from apscheduler.schedulers.background import BackgroundScheduler
 
+from app.config import settings
 from app.database import SessionLocal
 from app.services.gold_service import (
     fetch_world_gold_price,
@@ -12,6 +13,7 @@ from app.services.fuel_service import (
     save_fuel_prices,
     seed_default_fuel_prices,
 )
+from app.services.social_post_service import run_social_autopost
 
 scheduler = BackgroundScheduler()
 
@@ -62,6 +64,16 @@ def update_fuel_prices():
     loop.close()
 
 
+def run_daily_social_autopost():
+    """Job: đăng bài social (Facebook/TikTok)."""
+    print("[CRON] Running social autopost...")
+    db = SessionLocal()
+    try:
+        run_social_autopost(db)
+    finally:
+        db.close()
+
+
 def start_scheduler():
     """Bắt đầu scheduler."""
     from datetime import datetime
@@ -70,6 +82,14 @@ def start_scheduler():
     scheduler.add_job(update_gold_prices, "cron", minute=0, id="gold_update")
     # Cập nhật giá xăng mỗi ngày lúc 8h sáng
     scheduler.add_job(update_fuel_prices, "cron", hour=8, minute=0, id="fuel_update")
+    # Đăng social tự động mỗi ngày
+    scheduler.add_job(
+        run_daily_social_autopost,
+        "cron",
+        hour=settings.social_post_hour,
+        minute=settings.social_post_minute,
+        id="social_autopost",
+    )
 
     scheduler.start()
     print("[SCHEDULER] Started")
@@ -77,6 +97,13 @@ def start_scheduler():
     # Chạy lần đầu trong thread pool của scheduler (tránh conflict event loop)
     scheduler.add_job(update_gold_prices, "date", run_date=datetime.now(), id="gold_initial")
     scheduler.add_job(update_fuel_prices, "date", run_date=datetime.now(), id="fuel_initial")
+    if settings.social_post_initial_run:
+        scheduler.add_job(
+            run_daily_social_autopost,
+            "date",
+            run_date=datetime.now(),
+            id="social_initial",
+        )
 
 
 def stop_scheduler():
